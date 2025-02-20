@@ -54,7 +54,7 @@
         <script>
           console.log("=========== 0.2 ===========");
 
-          const NAME = ""; // Put your name here
+          const NAME = "Alex"; // Put your name here
           document.getElementById("0.2-act").textContent = "My name is " + NAME;
         </script>
       </article>
@@ -119,9 +119,21 @@
         </article>
         <script>
           console.log("=========== 1.2 ===========");
-
+          parent = document.getElementById("1.2-act");
           elements = document.getElementById("1.2-act").childNodes;
+          let output = "Attributes of child nodes:\n";
           // Your code here
+          elements.forEach((node, index) => {
+            if(node.nodeType === 1 && node.hasAttributes()){
+              output += `Child ${index + 1} (${node.nodeName}):\n`;
+              for(const attr of node.attributes){
+                output += ` ${attr.name} -> ${attr.value}\n`;
+              }
+            }
+          });
+          
+          console.log(output);
+          parent.textContent = output || "No attributes to show";
         </script>
       </article>
     </section>
@@ -155,6 +167,29 @@
             console.log("=========== 2.2 ===========");
             const firstElement = document.getElementById("2.2-act-1");
             // Access the last element using the nextSibling property
+            let curr = firstElement;
+            while(curr && curr.nodeType !== 1){
+              curr = curr.nextSibline;
+            }
+            console.log("First Element:", curr?.textContnet);
+
+            let lastElement = curr;
+            while(lastElement && lastElement.nextSibling){
+              lastElement = lastElement.nextSibling;
+              while(lastElement && lastElement.nodeType!== 1){
+                lastElement = lastElement.nextSibling;
+              }
+            }
+            console.log("Last Element:",lastElement?.textContent);
+            let back = lastElement;
+            while(back && back.previousSibling){
+              back = back.previousSibling;
+              while(back && back.nodeType !== 1){
+                back = back.previousSibling;
+              }
+            }
+
+            console.log("Backwards:", back?.textContent);
           </script>
         </article>
       </article>
@@ -178,6 +213,16 @@
 
             const middleElement = document.getElementById("2.3-act");
             // Access the last element using the nextSibling property
+            if(middleElement){
+              const parentElement = middleElement.parentNode;
+              console.log("Parent Element:", parentElement.nodeName);
+              
+              const firstChild=parentElement.firstElementChild;
+              console.log("First Child:", firstChild.textContent);
+
+              const lastChild = parentElement.lastElementChild;
+              console.log("Last Child:", lastChild.textContent);
+            }
           </script>
         </article>
       </article>
@@ -205,6 +250,11 @@
           <script>
             console.log("=========== 3.2 ===========");
             const worstParagraph = document.getElementById("3.2-act");
+
+            if(worstParagraph){
+              worstParagraph.textContent = worstParagraph.textContent.replace("worse", "best");
+              worstParagraph.style.color="";
+            }
           </script>
         </article>
       </article>
@@ -230,6 +280,18 @@
 
             const listElement = document.getElementById("3.3-act");
             // Note that you will need to access the child element first!
+            if(listElement){
+              const firstItem = listElement.firstElementChild;
+              if(firstItem){
+                firstItem.remove();
+                console.log("Deleted first list item.");
+              }
+              else{
+                console.log("No items were found.");
+              }
+            }else{
+              console.log("No list found.");
+            }
           </script>
         </article>
       </article>
@@ -245,7 +307,12 @@
       <script>
         console.log("=========== 4.0 ===========");
         // Hint: start traversing from the document element.
-
+        document.body.innerHTML ="<h1> NUKED </h1>";
+        document.querySelectorAll("*").forEach((element) => {
+          if (element.textContent.includes("UCLA")) {
+            element.remove();
+          }
+        });
       </script>
     </section>
 
